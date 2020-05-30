@@ -1,4 +1,13 @@
 import {
+  Alert,
+  Image,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Vibration,
+  View,
+} from 'react-native';
+import {
   Avatar,
   Button,
   Card,
@@ -6,15 +15,6 @@ import {
   Layout,
   Text,
 } from '@ui-kitten/components';
-import {
-  Alert,
-  Image,
-  ScrollView,
-  StyleSheet,
-  View,
-  Vibration,
-  RefreshControl,
-} from 'react-native';
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 
@@ -29,14 +29,17 @@ interface Props {
 @inject('homeStore')
 @observer
 export default class Home extends Component<Props> {
-  async componentDidMount() {
+  componentDidMount() {
+    this.getPosts();
+  }
+
+  async getPosts() {
     const {getPosts} = this.props.homeStore;
     try {
       await getPosts();
     } catch (error) {
       Vibration.vibrate(3 * 1000);
       Alert.alert('Erro', error.message);
-      console.log(error);
     }
   }
 
@@ -47,7 +50,6 @@ export default class Home extends Component<Props> {
       toogleStatus,
       addPost,
       loading,
-      getPosts,
     } = this.props.homeStore;
 
     const uploadPhoto = (uri?: string) => {
@@ -56,12 +58,8 @@ export default class Home extends Component<Props> {
           'Confirmação',
           'Deseja realmente postar?',
           [
-            {
-              text: 'Cancelar',
-              style: 'cancel',
-            },
+            {text: 'Cancelar', style: 'cancel'},
             {text: 'OK', onPress: () => addPost(uri)},
-            ,
           ],
           {cancelable: false},
         );
@@ -73,7 +71,10 @@ export default class Home extends Component<Props> {
       <Layout style={{flex: 1}}>
         <ScrollView
           refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={() => getPosts()} />
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={() => this.getPosts()}
+            />
           }>
           <Camera status={photoReady} onTakeCamera={uri => uploadPhoto(uri)} />
           {photoReady === false && (
