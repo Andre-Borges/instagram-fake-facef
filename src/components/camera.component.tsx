@@ -120,7 +120,11 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 20,
     alignSelf: 'center',
-    margin: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 15,
+    width: 200,
+    height: 50,
   },
   titlePhoto: {
     fontSize: 14,

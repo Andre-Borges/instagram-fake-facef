@@ -24,13 +24,13 @@ export default class HomeStore {
   @action addPost = (uriPhoto: string) => {
     const post: Post = {
       author: {
-        id: 2,
-        name: 'brunobrancalhao',
+        id: 1,
+        name: 'andre-borges',
         avatar:
-          'https://avatars3.githubusercontent.com/u/26446411?s=460&u=43b31f09ef111278a5f245d70ccb9d25e75b3c52&v=4',
+          'https://avatars1.githubusercontent.com/u/30246642?s=460&u=24105a32bde1c0c2bc975b2d998bceb92df6bf5e&v=4',
       },
-      authorId: 2,
-      description: 'irado',
+      authorId: 1,
+      description: 'React Native Zika',
       id: this.posts.length + 1,
       image: uriPhoto,
     };
